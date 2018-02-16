@@ -3,10 +3,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 from tensorflow.examples.tutorials.mnist import input_data
 import numpy as np
 import matplotlib.pyplot as plt
-import tensorflow as tf
 
 # load data set images
-FLAGS = None
 mnist_images = input_data.read_data_sets("MNIST_data/", one_hot=True)
 pixels, real_values = mnist_images.train.next_batch(10)
 
@@ -19,4 +17,3 @@ image = pixels[example_to_visualize, :]
 image = np.reshape(image, [28, 28])
 plt.imshow(image)
 plt.show()
-
