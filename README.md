@@ -16,6 +16,7 @@ Book chapters
 
 #### 2- Doing math with tensorflow
 - Juila set
+- Monte carlo algorithm 
 - Normal Distribution
 - Uniform Distribution
 
