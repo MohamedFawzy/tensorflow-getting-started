@@ -22,7 +22,8 @@ Book chapters
 #### 3- Starting with machine learning
 - linear regression algorithm with cost function Gradient decent
 - Mnist data set
-- Classification using KNN algorithm for mnist data set
+- Classification using K-nearset neighbour KNN algorithm for
+- Cluster using K-means algorithm .
 
 
 
