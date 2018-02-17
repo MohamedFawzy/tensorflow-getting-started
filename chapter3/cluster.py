@@ -55,4 +55,30 @@ expanded_centroids = tf.expand_dims(centroids, 1)
 vectors_subtration = tf.subtract(expanded_vectors, expanded_centroids)
 
 euclidean_distances = tf.reduce_sum(tf.square(vectors_subtration), 2)
+
 assignments = tf.to_int32(tf.argmin(euclidean_distances, 0))
+
+partitions = tf.dynamic_partition(vectors, assignments, num_clusters)
+for partition in partitions:
+    print partition
+
+update_centroids = tf.concat(0,[tf.expand_dims(tf.reduce_mean(partition, 0), 0)for partition in partitions])
+
+init_op = tf.global_variables_initializer()
+sess = tf.Session()
+sess.run(init_op)
+
+for step in xrange(num_steps):
+    _, centroid_values, assignment_values = sess.run([update_centroids, centroids, assignments])
+
+
+def display_partition(x_values, y_values, assignment_values):
+    labels = []
+    colors = ["red", "blue", "green", "yellow"]
+    for i in xrange(len(assignment_values)):
+        labels.append(colors[(assignment_values[i])])
+    color = labels
+    df = pd.DataFrame(dict(x=x_values, y=y_values, color=labels))
+    fig, ax = plt.subplots()
+    ax.scatter(df['x'], df['y'], c=df['color'])
+    plt.show()
