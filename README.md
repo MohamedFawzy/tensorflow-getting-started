@@ -2,9 +2,9 @@
 
 Tensorflow Quick Introduction
 
-every chapter consist in directory with it's name
+- Every chapter consist in directory with it's name
 
-Book chapters
+- Book chapters
 
 #### 1- Tensorflow basic concept
 - Install
@@ -23,7 +23,7 @@ Book chapters
 #### 3- Starting with machine learning
 - linear regression algorithm with cost function Gradient decent
 - Mnist data set
-- Classification using K-nearset neighbour KNN algorithm for
+- Classification using K-nearest neighbour KNN algorithm for
 - Cluster using K-means algorithm .
 
 
