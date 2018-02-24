@@ -20,9 +20,9 @@ x = tf.placeholder("float", [None, 784])
 y = tf.placeholder("float",  [None, 10])
 # create model
 # set model weights
-W = tf.Variable(tf.zeros[784, 10])
+W = tf.Variable(tf.zeros([784, 10]))
 # set model bias
-b = tf.Variable(tf.zeros[10])
+b = tf.Variable(tf.zeros([10]))
 # construct model
 activation = tf.nn.softmax(tf.multiply(x, W)+ b)
 # minimize error using cross entropy
