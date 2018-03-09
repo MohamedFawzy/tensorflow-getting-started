@@ -29,7 +29,7 @@ Tensorflow Quick Introduction
 #### 4- Introduction to Neural network
 
 -  Image classification for mnist dataset using linear regression and neural network  using single layer perception. 
-
+- Multi Layer Perception neural network with Adam algorithm
 
 
 
