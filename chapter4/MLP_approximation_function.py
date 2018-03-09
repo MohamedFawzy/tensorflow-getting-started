@@ -32,3 +32,47 @@ plt.scatter(x_training, y_training, c='green', label='train')
 plt.scatter(x_validation, y_validation, c='red', label='validation')
 plt.legend()
 plt.show()
+
+
+X = tf.placeholder(tf.float32, [None, 1], name="X")
+Y = tf.placeholder(tf.float32, [None, 1], name="Y")
+
+#first layer
+#Number of neurons = 10
+w_h = tf.Variable(tf.random_uniform([1, layer_1_neurons],\
+                                    minval=-1, maxval=1, dtype=tf.float32))
+b_h = tf.Variable(tf.zeros([1, layer_1_neurons], dtype=tf.float32))
+h = tf.nn.sigmoid(tf.matmul(X, w_h) + b_h)
+
+#output layer
+#Number of neurons = 10
+w_o = tf.Variable(tf.random_uniform([layer_1_neurons, 1],\
+                                    minval=-1, maxval=1, dtype=tf.float32))
+b_o = tf.Variable(tf.zeros([1, 1], dtype=tf.float32))
+
+#build the model
+model = tf.matmul(h, w_o) + b_o
+
+#minimize the cost function (model - Y)
+train_op = tf.train.AdamOptimizer().minimize(tf.nn.l2_loss(model - Y))
+
+#Start the Learning phase
+sess = tf.Session()
+sess.run(tf.initialize_all_variables())
+
+errors = []
+for i in range(NUM_EPOCHS):
+    for start, end in zip(range(0, len(x_training), batch_size),\
+                          range(batch_size, len(x_training), batch_size)):
+        sess.run(train_op, feed_dict={X: x_training[start:end],\
+                                      Y: y_training[start:end]})
+    cost = sess.run(tf.nn.l2_loss(model - y_validation),\
+                    feed_dict={X:x_validation})
+    errors.append(cost)
+    if i%100 == 0: print "epoch %d, cost = %g" % (i, cost)
+
+plt.plot(errors,label='MLP Function Approximation')
+plt.xlabel('epochs')
+plt.ylabel('cost')
+plt.legend()
+plt.show()
