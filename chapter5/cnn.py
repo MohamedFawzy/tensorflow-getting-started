@@ -58,3 +58,30 @@ conv2 = conv2d(conv1, wc2, bc2)
 conv2 = max_pool(conv2, k=2)
 conv2 = tf.nn.dropout(conv2, keep_prob)
 
+# densely connected layer
+
+wd1 = tf.Variable(tf.random_normal([ 7*7*64, 1024]))
+bd1 = tf.Variable(tf.random_normal([1024]))
+
+dense1 = tf.reshape(conv2, [-1, wd1.get_shape().as_list()[0]])
+dense1 = tf.nn.relu(tf.add(tf.matmul(dense1, wd1), bd1))
+dense1 = tf.nn.dropout(dense1, keep_prob)
+# readout layer
+wout = tf.Variable(tf.random_normal([1024, n_classes]))
+bout = tf.Variable(tf.random_normal([n_classes]))
+
+# predicition
+pred = tf.add(tf.matmul(dense1, wout), bout)
+# training and testing model
+# cost function using softmax
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
+# optimize function for cost .
+optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
+# model evaluation
+correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
+accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
+
+
+
+
+
