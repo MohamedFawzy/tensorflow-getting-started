@@ -81,7 +81,41 @@ optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
 correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
+# launching sessions
+init = tf.global_variables_initializer()
+# evaluate graph
+with tf.Session() as sess:
+    sess.run(init)
+    step=1
 
+    while step * batch_size < training_iterations:
+        batch_xs, batch_ys = mnist.train.next_batch(batch_size)
+        sess.run(optimizer,
+                        feed_dict={
+                                    x: batch_xs,
+                                    y: batch_ys,
+                                    keep_prob: dropout
+                                  }
+                 )
+
+        if step % display_step == 0:
+            # calc accuracy
+            acc = sess.run(accuracy,
+                            feed_dict={
+
+                                        x: batch_xs,
+                                        y: batch_ys,
+                                        keep_prob:1
+
+                                        }
+                           )
+
+            loss = sess.run(cost, feed_dict={x: batch_xs, y: batch_ys, keep_prob: 1.})
+            print "Iter " + str(step*batch_size) + ", Minibatch Loss= " + "{:.6f}".format(loss) + ", Training Accuracy= " + "{:.5f}".format(acc)
+        step += 1
+    print "Optimization Finished!"
+    # Calculate accuracy for 256 mnist test images
+    print "Testing Accuracy:", sess.run(accuracy, feed_dict={x: mnist.test.images[:256], y: mnist.test.labels[:256], keep_prob: 1.})
 
 
 
