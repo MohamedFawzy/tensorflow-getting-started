@@ -49,3 +49,12 @@ conv1 = max_pool(conv1, k=2)
 
 keep_prob = tf.placeholder(tf.float32)
 conv1 = tf.nn.dropout(conv1, keep_prob)
+
+# second layer
+wc2 = tf.Variable(tf.random_normal([5, 5, 32, 64]))
+bc2 = tf.Variable(tf.random_normal([64]))
+
+conv2 = conv2d(conv1, wc2, bc2)
+conv2 = max_pool(conv2, k=2)
+conv2 = tf.nn.dropout(conv2, keep_prob)
+
