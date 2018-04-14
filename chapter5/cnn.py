@@ -31,6 +31,21 @@ def conv2d(img , weight, bias):
                              strides=[1, 1, 1, 1],
                              padding='SAME'), bias))
 
+
+def max_pool(img , k):
+    return tf.nn.max_pool(img,
+                          ksize=[1, k, k, 1],
+                          strides=[1, k, k, 1],
+                          padding='SAME')
+
+
+
 # convolution layer
 conv1 = conv2d(_X, wc1, bc1)
 
+conv1 = max_pool(conv1, k=2)
+
+# reduce over fitting using dropout
+
+keep_prob = tf.placeholder(tf.float32)
+conv1 = tf.nn.dropout(conv1, keep_prob)
