@@ -4,7 +4,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 # define cnn parameters
 learning_rate = 0.001
-training_iterations = 100000
+training_iterations = 150000
 batch_size = 128
 display_step = 10
 # each shape is 28 * 28 array of pixels
@@ -73,7 +73,8 @@ bout = tf.Variable(tf.random_normal([n_classes]))
 # predicition
 pred = tf.add(tf.matmul(dense1, wout), bout)
 # training and testing model
-# cost function using softmax
+# cost function using softmax with crosss entropy
+
 cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
 # optimize function for cost .
 optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(cost)
