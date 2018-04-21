@@ -35,5 +35,5 @@ Tensorflow Quick Introduction
 #### 5- Deep learning
 
 - Image classification problem using Convolution neural network .
-
+- NLP problem using recurrent neural network .
 
